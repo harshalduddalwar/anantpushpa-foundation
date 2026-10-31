@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anantpushpa Foundation</title>
+  <meta name="description" content="Anantpushpa Foundation supports learners, families, and communities across India through practical educational assistance, vocational training, and locally grounded partnerships." />
+  <link rel="icon" href="logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c0873a;
+      --gold-deep: #9a6826;
+      --gold-soft: #f4e8d4;
+      --green: #068d48;
+      --green-soft: #e3f1e8;
+      --ink: #2b2a28;
+      --muted: #5f5b55;
+      --line: #e8e1d5;
+      --paper: #ffffff;
+      --cream: #fbf7f0;
+      --radius: 14px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 116px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 400 16px/1.45 "Inter", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: 400; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+    p { margin: 0; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-deep); margin-bottom: 18px;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--green); border-radius: 2px; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: saturate(1.4) blur(10px);
+      -webkit-backdrop-filter: saturate(1.4) blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    header.scrolled { border-bottom-color: var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 108px; }
+    .brand { display: flex; align-items: center; text-decoration: none; }
+    .brand img {
+      display: block; height: 92px; width: auto;
+      filter: brightness(1.03); mix-blend-mode: multiply;
+    }
+    .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+    .nav ul a { text-decoration: none; color: var(--muted); font-weight: 500; transition: color 0.15s; }
+    .nav ul a:hover { color: var(--gold-deep); }
+    .menu-btn { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: var(--ink); }
+
+    /* Hero */
+    .hero {
+      background:
+        radial-gradient(900px 420px at 85% 10%, var(--gold-soft), transparent 70%),
+        radial-gradient(700px 380px at 0% 100%, var(--green-soft), transparent 70%),
+        var(--cream);
+      padding: 88px 0 104px;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 56px; align-items: center; }
+    .hero h1 { font-size: 48px; text-wrap: balance; }
+    .hero h1 em { font-style: normal; color: var(--gold-deep); }
+    .hero p.lede { color: var(--muted); max-width: 52ch; margin-top: 24px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 24px; border-radius: 999px;
+      font-weight: 600; text-decoration: none;
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--gold); color: #fff; box-shadow: 0 6px 18px -8px rgba(154, 104, 38, 0.6); }
+    .btn-primary:hover { background: var(--gold-deep); }
+    .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+    .btn-ghost:hover { border-color: var(--gold); }
+    .hero-photo img {
+      display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 30% 50%;
+      border-radius: var(--radius);
+      box-shadow: 0 24px 48px -28px rgba(60, 40, 10, 0.45);
+    }
+
+    section { padding: 104px 0; }
+
+    /* Inspiration */
+    .inspiration { background: var(--paper); }
+    .insp-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
+    .insp-grid h2 { font-size: 48px; }
+    .insp-photo { margin: 32px 0 0; }
+    .insp-photo img {
+      display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: 0 24px 48px -28px rgba(60, 40, 10, 0.45);
+    }
+    .insp-body p { color: var(--muted); }
+    .insp-body p + p { margin-top: 22px; }
+    .insp-body p:first-child {
+      font-family: "Times New Roman", Times, serif; font-size: 23px; line-height: 1.5; color: var(--ink);
+      padding-left: 24px; border-left: 3px solid var(--gold);
+    }
+
+    /* Support */
+    .support { background: var(--cream); }
+    .section-head { max-width: 720px; margin-bottom: 56px; }
+    .section-head h2 { font-size: 48px; }
+    .section-head p { color: var(--muted); margin-top: 18px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card {
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 34px 30px 36px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -24px rgba(60, 40, 10, 0.35); }
+    .icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      display: grid; place-items: center; margin-bottom: 24px;
+      background: var(--gold-soft); color: var(--gold-deep);
+    }
+    .card:nth-child(2) .icon { background: var(--green-soft); color: var(--green); }
+    .icon svg { width: 26px; height: 26px; }
+    .card h3 { font-size: 24px; margin-bottom: 12px; }
+    .card p { color: var(--muted); }
+
+    /* How we work */
+    .how-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; }
+    .how-grid h2 { font-size: 48px; }
+    .principles { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+    .principles li {
+      counter-increment: p;
+      display: grid; grid-template-columns: 56px 1fr; align-items: baseline;
+      padding: 22px 0; border-top: 1px solid var(--line);
+      font-family: "Times New Roman", Times, serif; font-size: 23px; line-height: 1.35;
+    }
+    .principles li:last-child { border-bottom: 1px solid var(--line); }
+    .principles li::before {
+      content: counter(p, decimal-leading-zero);
+      font-family: "Inter", system-ui, sans-serif; font-weight: 600;
+      letter-spacing: 0.08em; color: var(--green);
+    }
+
+    /* Donations + contact */
+    .closing { background: var(--ink); color: #f3efe8; }
+    .closing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .panel { border-radius: var(--radius); padding: 44px 40px; }
+    .panel-note { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .panel-contact { background: var(--gold); color: #fff; }
+    .closing .eyebrow { color: #e3b878; }
+    .closing .eyebrow::before { background: #e3b878; }
+    .panel-contact .eyebrow { color: #fff; }
+    .panel-contact .eyebrow::before { background: #fff; }
+    .panel h2 { font-size: 48px; margin-bottom: 18px; }
+    .panel p { color: rgba(243, 239, 232, 0.78); }
+    .panel-contact p { color: rgba(255, 255, 255, 0.9); }
+    .panel-contact .btn { background: #fff; color: var(--gold-deep); margin-top: 30px; }
+
+    footer { background: var(--ink); color: rgba(243, 239, 232, 0.55); padding: 28px 0 40px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 28px; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media (max-width: 900px) {
+      section { padding: 76px 0; }
+      .hero { padding: 48px 0 72px; }
+      .hero-grid, .insp-grid, .how-grid, .closing-grid { grid-template-columns: 1fr; gap: 36px; }
+      .br-desktop { display: none; }
+      .hero-photo img { aspect-ratio: 16 / 10; object-position: 20% 50%; }
+      .insp-photo img { max-width: 420px; }
+      .cards { grid-template-columns: 1fr; }
+      .nav ul {
+        display: none; position: absolute; top: 108px; left: 0; right: 0;
+        flex-direction: column; gap: 0; background: #fff; border-bottom: 1px solid var(--line);
+        padding: 8px 24px 16px;
+      }
+      .nav ul.open { display: flex; }
+      .nav ul a { display: block; padding: 12px 0; }
+      .menu-btn { display: block; }
+    }
+    @media (max-width: 520px) {
+      .wrap { padding: 0 16px; }
+      .panel { padding: 34px 24px; }
+      .principles li { font-size: 20px; grid-template-columns: 44px 1fr; }
+      .insp-body p:first-child { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <nav class="wrap nav" aria-label="Main">
+      <a class="brand" href="#top" aria-label="Anantpushpa Foundation home">
+        <img src="logo.jpg" alt="Anant Pushpa Foundation" width="536" height="407" />
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <ul id="nav-links">
+        <li><a href="#inspiration">Inspiration</a></li>
+        <li><a href="#support">What We Support</a></li>
+        <li><a href="#how-we-work">How We Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Anantpushpa Foundation</span>
+          <h1>Education and skills can open <br class="br-desktop" />a path to <em>opportunity.</em></h1>
+          <p class="lede">Anantpushpa Foundation supports learners, families, and communities across India through practical educational assistance, vocational training, and locally grounded partnerships.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#inspiration">Our Inspiration</a>
+            <a class="btn btn-ghost" href="#support">What We Support</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="books.webp" alt="A stack of well-used hardcover books" width="2000" height="1330" />
+        </div>
+      </div>
+    </section>
+
+    <section class="inspiration" id="inspiration">
+      <div class="wrap insp-grid">
+        <div class="insp-side">
+          <span class="eyebrow reveal">Our Inspiration</span>
+          <h2 class="reveal">Inspiration for establishing the Foundation</h2>
+          <figure class="insp-photo reveal">
+            <img src="parents.webp" alt="Our parents, seated together on a garden porch" width="1200" height="1600" loading="lazy" />
+          </figure>
+        </div>
+        <div class="insp-body reveal">
+          <p>Anantpushpa Foundation was established to carry forward a guiding belief passed down by our parents: that education is one of the strongest paths to realizing a person’s potential.</p>
+          <p>They believe that education does more than provide academic knowledge, it builds confidence, independence, dignity, and the ability to make meaningful choices in life. It can transform opportunities not only for an individual, but also for an entire family and community.</p>
+          <p>The Foundation was created to convert that belief into practical action. Many capable children, young people, and adults are unable to continue their education or acquire useful skills because of financial hardship, limited local resources, or a lack of support. Even modest assistance with school fees, books, transportation, technology, vocational training, or family needs can help a learner remain engaged and move toward a more secure future.</p>
+          <p>Through Anantpushpa Foundation, we hope to support learners and communities across India in a thoughtful, respectful, and sustainable manner. Our aim is not simply to provide short-term assistance, but to help strengthen educational foundations, develop practical and vocational skills, and create opportunities that enable people to become more self-reliant. In this way, the Foundation honors the values of our parents while contributing to the long-term educational and social development of the communities it serves.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="support" id="support">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">What We Support</span>
+          <h2>Three support areas</h2>
+          <p>We are beginning thoughtfully and locally: building partnerships, listening to communities, and developing programs that help learners continue, grow, and thrive.</p>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1z"/><path d="M12 7.5V20"/></svg>
+            </div>
+            <h3>Stay in Education</h3>
+            <p>Fees, books, uniforms, devices, transportation, tutoring, and other practical support.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3 17.8V21h3.2l6.3-6.3a4 4 0 0 0 5.2-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>
+            </div>
+            <h3>Build Useful Skills</h3>
+            <p>Vocational, technical, digital, trade, and livelihood-oriented training.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6"/><path d="M14 14.6c.9-.4 1.9-.6 3-.6 2.5 0 4.5 2.2 4.5 5"/></svg>
+            </div>
+            <h3>Strengthening Communities</h3>
+            <p>Partnerships with schools, training providers, educators, and community organizations.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-we-work">
+      <div class="wrap how-grid">
+        <div class="reveal">
+          <span class="eyebrow">Our Approach</span>
+          <h2>How we work</h2>
+        </div>
+        <ol class="principles reveal">
+          <li>Need-informed and fair</li>
+          <li>Respectful of dignity and local knowledge</li>
+          <li>Inclusive and non-discriminatory</li>
+          <li>Focused on durable opportunity, not one-time charity</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="closing" id="contact">
+      <div class="wrap closing-grid">
+        <div class="panel panel-note reveal">
+          <span class="eyebrow">Donations &amp; Support</span>
+          <h2>Your good wishes matter most</h2>
+          <p>Although Anantpushpa Foundation is registered under Sections 12A and 80G, we are not currently seeking donations. At this early stage, we value your advice, encouragement, and good wishes as we build the Foundation thoughtfully and responsibly.</p>
+        </div>
+        <div class="panel panel-contact reveal">
+          <span class="eyebrow">Contact</span>
+          <h2>Get in touch</h2>
+          <p>We would be glad to hear from you, whether you have advice to share, a partnership in mind, or simply want to learn more about our work.</p>
+          <!-- TODO: replace with the Foundation's email address -->
+          <a class="btn" href="mailto:FOUNDATION_EMAIL">Email the Foundation
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© <span id="year">2026</span> Anantpushpa Foundation</span>
+      <span>Supporting learners and communities across India</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const header = document.querySelector("header");
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const btn = document.querySelector(".menu-btn");
+    const links = document.getElementById("nav-links");
+    btn.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open);
+    });
+    links.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") { links.classList.remove("open"); btn.setAttribute("aria-expanded", false); }
+    });
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    } else {
+      document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+    }
+  </script>
+</body>
+</html>
