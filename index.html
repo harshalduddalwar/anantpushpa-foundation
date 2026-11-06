@@ -23,9 +23,10 @@
       --cream: #fbf7f0;
       --radius: 14px;
       --max: 1120px;
+      --nav-h: 104px;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 116px; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 8px); }
     body {
       margin: 0;
       background: var(--paper);
@@ -47,37 +48,49 @@
     /* Header */
     header {
       position: sticky; top: 0; z-index: 10;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: saturate(1.4) blur(10px);
-      -webkit-backdrop-filter: saturate(1.4) blur(10px);
-      border-bottom: 1px solid transparent;
+      /* Frosted glass: the hero illustration shows through, blurred */
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: saturate(1.5) blur(18px);
+      -webkit-backdrop-filter: saturate(1.5) blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
       transition: border-color 0.2s;
     }
     header.scrolled { border-bottom-color: var(--line); }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 108px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
     .brand { display: flex; align-items: center; text-decoration: none; }
-    .brand img {
-      display: block; height: 92px; width: auto;
-      filter: brightness(1.03); mix-blend-mode: multiply;
-    }
+    .brand img { display: block; height: 76px; width: auto; }
     .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
-    .nav ul a { text-decoration: none; color: var(--muted); font-weight: 500; transition: color 0.15s; }
+    .nav ul a { text-decoration: none; color: var(--ink); font-weight: 500; transition: color 0.15s; }
     .nav ul a:hover { color: var(--gold-deep); }
     .menu-btn { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: var(--ink); }
 
     /* Hero */
     .hero {
-      background:
-        radial-gradient(900px 420px at 85% 10%, var(--gold-soft), transparent 70%),
-        radial-gradient(700px 380px at 0% 100%, var(--green-soft), transparent 70%),
-        var(--cream);
-      padding: 88px 0 104px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      /* Pulled up under the sticky header so the illustration sits behind the frosted nav */
+      margin-top: calc(-1 * var(--nav-h));
+      /* Exactly the illustration's proportions, so none of it is cropped */
+      height: calc(100vw * 639 / 1600);
+      padding: var(--nav-h) 0 0;
+      background: var(--cream);
     }
-    .hero-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 56px; align-items: center; }
+    .hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* Light cream wash over the wall in the illustration so the text reads cleanly */
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(90deg, rgba(251, 247, 240, 0.75) 0%, rgba(251, 247, 240, 0.55) 28%, rgba(251, 247, 240, 0) 42%);
+    }
+    /* Text sits on the blank wall at the left of the illustration, so it hugs the page edge rather than the centred column */
+    .hero .wrap { position: relative; z-index: 2; width: 100%; max-width: none; padding-left: clamp(24px, 6vw, 104px); }
+    .hero-copy { max-width: 420px; }
     .hero h1 { font-size: 48px; text-wrap: balance; }
     .hero h1 em { font-style: normal; color: var(--gold-deep); }
-    .hero p.lede { color: var(--muted); max-width: 52ch; margin-top: 24px; }
-    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+    .hero p.lede { color: var(--ink); max-width: 340px; margin-top: 20px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
     .btn {
       display: inline-flex; align-items: center; gap: 10px;
       padding: 14px 24px; border-radius: 999px;
@@ -89,11 +102,6 @@
     .btn-primary:hover { background: var(--gold-deep); }
     .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
     .btn-ghost:hover { border-color: var(--gold); }
-    .hero-photo img {
-      display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 30% 50%;
-      border-radius: var(--radius);
-      box-shadow: 0 24px 48px -28px rgba(60, 40, 10, 0.45);
-    }
 
     section { padding: 104px 0; }
 
@@ -152,6 +160,8 @@
       font-family: "Inter", system-ui, sans-serif; font-weight: 600;
       letter-spacing: 0.08em; color: var(--green);
     }
+    .principles strong { font-weight: 400; }
+    .principles li p { font-family: "Inter", system-ui, sans-serif; font-size: 16px; line-height: 1.45; color: var(--muted); margin-top: 6px; }
 
     /* Donations + contact */
     .closing { background: var(--ink); color: #f3efe8; }
@@ -168,8 +178,14 @@
     .panel-contact p { color: rgba(255, 255, 255, 0.9); }
     .panel-contact .btn { background: #fff; color: var(--gold-deep); margin-top: 30px; }
 
-    footer { background: var(--ink); color: rgba(243, 239, 232, 0.55); padding: 28px 0 40px; }
+    footer { background: var(--ink); color: rgba(243, 239, 232, 0.55); padding: 28px 0 0; }
     footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 28px; }
+    .footer-art { position: relative; margin: 8px 0 0; }
+    .footer-art img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; }
+    .footer-art::before {
+      content: ""; position: absolute; inset: 0 0 auto; height: 55%; pointer-events: none;
+      background: linear-gradient(to bottom, var(--ink) 0%, rgba(43, 42, 40, 0.88) 14%, rgba(43, 42, 40, 0.6) 32%, rgba(43, 42, 40, 0.25) 60%, rgba(43, 42, 40, 0) 100%);
+    }
 
     /* Reveal on scroll */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -179,16 +195,23 @@
       .reveal { opacity: 1; transform: none; transition: none; }
     }
 
-    @media (max-width: 900px) {
-      section { padding: 76px 0; }
-      .hero { padding: 48px 0 72px; }
-      .hero-grid, .insp-grid, .how-grid, .closing-grid { grid-template-columns: 1fr; gap: 36px; }
+    /* Too narrow to fit text beside the people: show the whole illustration as a band above the text */
+    @media (max-width: 1399px) {
+      .hero { display: block; height: auto; margin-top: 0; padding: 0 0 64px; }
+      .hero::before { display: none; }
+      .hero-bg { position: static; height: auto; margin-bottom: 40px; }
       .br-desktop { display: none; }
-      .hero-photo img { aspect-ratio: 16 / 10; object-position: 20% 50%; }
+    }
+    @media (max-width: 900px) {
+      .footer-art img { aspect-ratio: 4 / 3; }
+      :root { --nav-h: 84px; }
+      section { padding: 76px 0; }
+      .brand img { height: 58px; }
+      .insp-grid, .how-grid, .closing-grid { grid-template-columns: 1fr; gap: 36px; }
       .insp-photo img { max-width: 420px; }
       .cards { grid-template-columns: 1fr; }
       .nav ul {
-        display: none; position: absolute; top: 108px; left: 0; right: 0;
+        display: none; position: absolute; top: var(--nav-h); left: 0; right: 0;
         flex-direction: column; gap: 0; background: #fff; border-bottom: 1px solid var(--line);
         padding: 8px 24px 16px;
       }
@@ -208,7 +231,7 @@
   <header id="top">
     <nav class="wrap nav" aria-label="Main">
       <a class="brand" href="#top" aria-label="Anantpushpa Foundation home">
-        <img src="logo.jpg" alt="Anant Pushpa Foundation" width="536" height="407" />
+        <img src="logo.svg" alt="Anant Pushpa Foundation" width="562" height="155" />
       </a>
       <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -224,18 +247,15 @@
 
   <main>
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="eyebrow">Anantpushpa Foundation</span>
-          <h1>Education and skills can open <br class="br-desktop" />a path to <em>opportunity.</em></h1>
+      <img class="hero-bg" src="hero.webp" alt="Young people studying, working on a laptop, building electronics and learning woodwork in a sunlit village workshop" width="1600" height="639" />
+      <div class="wrap">
+        <div class="hero-copy">
+          <h1>Education and skills <br class="br-desktop" />can open a path <br class="br-desktop" />to <em>opportunity.</em></h1>
           <p class="lede">Anantpushpa Foundation supports learners, families, and communities across India through practical educational assistance, vocational training, and locally grounded partnerships.</p>
           <div class="actions">
             <a class="btn btn-primary" href="#inspiration">Our Inspiration</a>
             <a class="btn btn-ghost" href="#support">What We Support</a>
           </div>
-        </div>
-        <div class="hero-photo">
-          <img src="books.webp" alt="A stack of well-used hardcover books" width="2000" height="1330" />
         </div>
       </div>
     </section>
@@ -250,10 +270,10 @@
           </figure>
         </div>
         <div class="insp-body reveal">
-          <p>Anantpushpa Foundation was established to carry forward a guiding belief passed down by our parents: that education is one of the strongest paths to realizing a person’s potential.</p>
-          <p>They believe that education does more than provide academic knowledge, it builds confidence, independence, dignity, and the ability to make meaningful choices in life. It can transform opportunities not only for an individual, but also for an entire family and community.</p>
-          <p>The Foundation was created to convert that belief into practical action. Many capable children, young people, and adults are unable to continue their education or acquire useful skills because of financial hardship, limited local resources, or a lack of support. Even modest assistance with school fees, books, transportation, technology, vocational training, or family needs can help a learner remain engaged and move toward a more secure future.</p>
-          <p>Through Anantpushpa Foundation, we hope to support learners and communities across India in a thoughtful, respectful, and sustainable manner. Our aim is not simply to provide short-term assistance, but to help strengthen educational foundations, develop practical and vocational skills, and create opportunities that enable people to become more self-reliant. In this way, the Foundation honors the values of our parents while contributing to the long-term educational and social development of the communities it serves.</p>
+          <p>Anantpushpa Foundation was established to carry forward a guiding belief instilled in us by our parents: education is one of the strongest paths to realizing a person’s potential.</p>
+          <p>This conviction, shared by our late father and continued by our mother, is that education does more than provide academic knowledge. It builds confidence, independence, dignity, and the ability to make meaningful choices in life. It can transform opportunities not only for an individual, but also for an entire family and community.</p>
+          <p>The Foundation was created to translate that belief into practical action. Many capable children, young people, and adults are unable to continue their education or acquire useful skills because of financial hardship, limited local resources, or a lack of support. Even modest assistance with school fees, books, transportation, technology, vocational training, or family needs can help a learner remain engaged and move toward a more secure future.</p>
+          <p>Through Anantpushpa Foundation, we hope to support learners and communities across India in a thoughtful, respectful, and sustainable manner. Our aim is not simply to provide short-term assistance, but to strengthen educational foundations, develop practical and vocational skills, and create opportunities that enable people to become more self-reliant. In this way, the Foundation honors the values that shaped our family while contributing to the long-term educational and social development of the communities it serves.</p>
         </div>
       </div>
     </section>
@@ -298,10 +318,10 @@
           <h2>How we work</h2>
         </div>
         <ol class="principles reveal">
-          <li>Need-informed and fair</li>
-          <li>Respectful of dignity and local knowledge</li>
-          <li>Inclusive and non-discriminatory</li>
-          <li>Focused on durable opportunity, not one-time charity</li>
+          <li><div><strong>Support guided by need</strong><p>We focus assistance where it can make a meaningful difference.</p></div></li>
+          <li><div><strong>Respect for people and communities</strong><p>We listen to local knowledge and treat every learner and family with dignity.</p></div></li>
+          <li><div><strong>Open to all</strong><p>We welcome people of every background and do not discriminate.</p></div></li>
+          <li><div><strong>Opportunity that lasts</strong><p>We aim to build skills, confidence, and pathways that endure beyond a single grant.</p></div></li>
         </ol>
       </div>
     </section>
@@ -311,7 +331,7 @@
         <div class="panel panel-note reveal">
           <span class="eyebrow">Donations &amp; Support</span>
           <h2>Your good wishes matter most</h2>
-          <p>Although Anantpushpa Foundation is registered under Sections 12A and 80G, we are not currently seeking donations. At this early stage, we value your advice, encouragement, and good wishes as we build the Foundation thoughtfully and responsibly.</p>
+          <p>While the Anantpushpa Foundation has applied for registration under Sections 12A and 80G of the Indian tax code, we are not currently seeking donations. At this early stage, we value your advice, encouragement, and good wishes as we build the Foundation thoughtfully and responsibly.</p>
         </div>
         <div class="panel panel-contact reveal">
           <span class="eyebrow">Contact</span>
@@ -331,6 +351,9 @@
       <span>© <span id="year">2026</span> Anantpushpa Foundation</span>
       <span>Supporting learners and communities across India</span>
     </div>
+    <figure class="footer-art">
+      <img src="sunset.webp" alt="A grandfather and a young child sitting together on a curved wooden bench, watching the sun set over green hills" width="1448" height="1086" loading="lazy" />
+    </figure>
   </footer>
 
   <script>
