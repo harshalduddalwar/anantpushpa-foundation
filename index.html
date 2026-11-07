@@ -8,7 +8,7 @@
   <link rel="icon" href="logo.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Tiro+Devanagari+Marathi&display=swap" rel="stylesheet" />
   <style>
     :root {
       --gold: #c0873a;
@@ -62,6 +62,22 @@
     .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
     .nav ul a { text-decoration: none; color: var(--ink); font-weight: 500; transition: color 0.15s; }
     .nav ul a:hover { color: var(--gold-deep); }
+    .nav-end { display: flex; align-items: center; gap: 30px; }
+    .nav-end ul { order: -1; }
+    .lang { display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line); }
+    .lang button {
+      font: inherit; font-size: 14px; font-weight: 600; line-height: 1; color: var(--muted);
+      background: none; border: 0; border-radius: 999px; padding: 8px 12px; cursor: pointer;
+    }
+    .lang button[lang="mr"] { font-family: "Noto Sans Devanagari", sans-serif; }
+    .lang button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+    /* Marathi: Devanagari faces in place of Times New Roman / Inter, a little more line height, no letter-spacing */
+    html:lang(mr) body, html:lang(mr) .principles li p { font-family: "Noto Sans Devanagari", "Inter", sans-serif; }
+    html:lang(mr) :is(h1, h2, h3, .insp-body p:first-child, .principles li, .logo-note p) { font-family: "Tiro Devanagari Marathi", "Times New Roman", serif; }
+    html:lang(mr) :is(h1, h2, h3) { line-height: 1.3; letter-spacing: 0; }
+    html:lang(mr) .eyebrow { letter-spacing: 0.02em; }
+    html:lang(mr) body { line-height: 1.6; }
     .menu-btn { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: var(--ink); }
 
     /* Hero */
@@ -178,12 +194,21 @@
     .panel-contact p { color: rgba(255, 255, 255, 0.9); }
     .panel-contact .btn { background: #fff; color: var(--gold-deep); margin-top: 30px; }
 
-    footer { background: var(--ink); color: rgba(243, 239, 232, 0.55); padding: 28px 0 0; }
-    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 28px; }
-    .footer-art { position: relative; margin: 8px 0 0; }
+    footer { background: var(--ink); color: rgba(243, 239, 232, 0.55); padding: 0 0 28px; }
+    .logo-note {
+      display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: center;
+      padding-top: 72px; padding-bottom: 72px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .logo-note img { width: 100%; max-width: 340px; height: auto; }
+    .logo-note .eyebrow { color: #e3b878; }
+    .logo-note .eyebrow::before { background: #e3b878; }
+    .logo-note p { font-family: "Times New Roman", Times, serif; font-size: 23px; line-height: 1.5; color: #f3efe8; margin-top: 16px; }
+    .logo-note em { font-style: normal; color: #e3b878; }
+    .footer-meta { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-top: 28px; }
+    .footer-art { position: relative; margin: 0; }
     .footer-art img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; }
     .footer-art::before {
-      content: ""; position: absolute; inset: 0 0 auto; height: 55%; pointer-events: none;
+      content: ""; position: absolute; top: -1px; left: 0; right: 0; height: calc(55% + 1px); pointer-events: none;
       background: linear-gradient(to bottom, var(--ink) 0%, rgba(43, 42, 40, 0.88) 14%, rgba(43, 42, 40, 0.6) 32%, rgba(43, 42, 40, 0.25) 60%, rgba(43, 42, 40, 0) 100%);
     }
 
@@ -203,6 +228,8 @@
       .br-desktop { display: none; }
     }
     @media (max-width: 900px) {
+      .logo-note { grid-template-columns: 1fr; gap: 28px; padding-top: 56px; padding-bottom: 56px; }
+      .logo-note img { max-width: 260px; }
       .footer-art img { aspect-ratio: 4 / 3; }
       :root { --nav-h: 84px; }
       section { padding: 76px 0; }
@@ -218,12 +245,17 @@
       .nav ul.open { display: flex; }
       .nav ul a { display: block; padding: 12px 0; }
       .menu-btn { display: block; }
+      .nav-end { gap: 8px; }
     }
     @media (max-width: 520px) {
       .wrap { padding: 0 16px; }
       .panel { padding: 34px 24px; }
       .principles li { font-size: 20px; grid-template-columns: 44px 1fr; }
       .insp-body p:first-child { font-size: 20px; }
+      .logo-note p { font-size: 20px; }
+      .brand img { height: 48px; }
+      .lang button { font-size: 13px; padding: 7px 9px; }
+      .menu-btn { padding: 8px 0 8px 4px; }
     }
   </style>
 </head>
@@ -233,15 +265,21 @@
       <a class="brand" href="#top" aria-label="Anantpushpa Foundation home">
         <img src="logo.svg" alt="Anant Pushpa Foundation" width="562" height="155" />
       </a>
+      <div class="nav-end">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="mr" aria-pressed="false" lang="mr">मराठी</button>
+      </div>
       <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
       <ul id="nav-links">
-        <li><a href="#inspiration">Inspiration</a></li>
-        <li><a href="#support">What We Support</a></li>
-        <li><a href="#how-we-work">How We Work</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#inspiration" data-i18n="nav.insp">Inspiration</a></li>
+        <li><a href="#support" data-i18n="nav.support">What We Support</a></li>
+        <li><a href="#how-we-work" data-i18n="nav.how">How We Work</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
+      </div>
     </nav>
   </header>
 
@@ -250,11 +288,11 @@
       <img class="hero-bg" src="hero.webp" alt="Young people studying, working on a laptop, building electronics and learning woodwork in a sunlit village workshop" width="1600" height="639" />
       <div class="wrap">
         <div class="hero-copy">
-          <h1>Education and skills <br class="br-desktop" />can open a path <br class="br-desktop" />to <em>opportunity.</em></h1>
-          <p class="lede">Anantpushpa Foundation supports learners, families, and communities across India through practical educational assistance, vocational training, and locally grounded partnerships.</p>
+          <h1 data-i18n="hero.h1">Education and skills <br class="br-desktop" />can open a path <br class="br-desktop" />to <em>opportunity.</em></h1>
+          <p class="lede" data-i18n="hero.lede">Anantpushpa Foundation supports learners, families, and communities across India through practical educational assistance, vocational training, and locally grounded partnerships.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="#inspiration">Our Inspiration</a>
-            <a class="btn btn-ghost" href="#support">What We Support</a>
+            <a class="btn btn-primary" href="#inspiration" data-i18n="hero.btn1">Our Inspiration</a>
+            <a class="btn btn-ghost" href="#support" data-i18n="hero.btn2">What We Support</a>
           </div>
         </div>
       </div>
@@ -263,17 +301,17 @@
     <section class="inspiration" id="inspiration">
       <div class="wrap insp-grid">
         <div class="insp-side">
-          <span class="eyebrow reveal">Our Inspiration</span>
-          <h2 class="reveal">Inspiration for establishing the Foundation</h2>
+          <span class="eyebrow reveal" data-i18n="insp.eyebrow">Our Inspiration</span>
+          <h2 class="reveal" data-i18n="insp.h2">Inspiration for establishing the Foundation</h2>
           <figure class="insp-photo reveal">
             <img src="parents.webp" alt="Our parents, seated together on a garden porch" width="1200" height="1600" loading="lazy" />
           </figure>
         </div>
         <div class="insp-body reveal">
-          <p>Anantpushpa Foundation was established to carry forward a guiding belief instilled in us by our parents: education is one of the strongest paths to realizing a person’s potential.</p>
-          <p>This conviction, shared by our late father and continued by our mother, is that education does more than provide academic knowledge. It builds confidence, independence, dignity, and the ability to make meaningful choices in life. It can transform opportunities not only for an individual, but also for an entire family and community.</p>
-          <p>The Foundation was created to translate that belief into practical action. Many capable children, young people, and adults are unable to continue their education or acquire useful skills because of financial hardship, limited local resources, or a lack of support. Even modest assistance with school fees, books, transportation, technology, vocational training, or family needs can help a learner remain engaged and move toward a more secure future.</p>
-          <p>Through Anantpushpa Foundation, we hope to support learners and communities across India in a thoughtful, respectful, and sustainable manner. Our aim is not simply to provide short-term assistance, but to strengthen educational foundations, develop practical and vocational skills, and create opportunities that enable people to become more self-reliant. In this way, the Foundation honors the values that shaped our family while contributing to the long-term educational and social development of the communities it serves.</p>
+          <p data-i18n="insp.p1">Anantpushpa Foundation is a family-led initiative inspired by a belief instilled in us by our parents: education can help a person realize their potential.</p>
+          <p data-i18n="insp.p2">Our late father and our mother believed deeply in the power of education to build confidence, independence, dignity, and meaningful opportunity for individuals, families, and communities.</p>
+          <p data-i18n="insp.p3">We hope to offer practical support in the places most meaningful to our family. Help with school fees, books, transportation, technology, or vocational training can help a learner continue their education and build a more secure future.</p>
+          <p data-i18n="insp.p4">Our aim is simple: to make a sincere and lasting difference, one learner and one family at a time.</p>
         </div>
       </div>
     </section>
@@ -281,31 +319,31 @@
     <section class="support" id="support">
       <div class="wrap">
         <div class="section-head reveal">
-          <span class="eyebrow">What We Support</span>
-          <h2>Three support areas</h2>
-          <p>We are beginning thoughtfully and locally: building partnerships, listening to communities, and developing programs that help learners continue, grow, and thrive.</p>
+          <span class="eyebrow" data-i18n="sup.eyebrow">What We Support</span>
+          <h2 data-i18n="sup.h2">Three support areas</h2>
+          <p data-i18n="sup.p">We hope to work with learners, families, and trusted local partners in practical ways.</p>
         </div>
         <div class="cards">
           <article class="card reveal">
             <div class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5c3-1.5 6.5-1.5 10 1 3.5-2.5 7-2.5 10-1V19c-3-1.5-6.5-1.5-10 1-3.5-2.5-7-2.5-10-1z"/><path d="M12 7.5V20"/></svg>
             </div>
-            <h3>Stay in Education</h3>
-            <p>Fees, books, uniforms, devices, transportation, tutoring, and other practical support.</p>
+            <h3 data-i18n="sup.c1h">Help Learners Continue</h3>
+            <p data-i18n="sup.c1p">School fees, books, uniforms, devices, transportation, tutoring, and other everyday support that can help learners stay in education.</p>
           </article>
           <article class="card reveal">
             <div class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3 17.8V21h3.2l6.3-6.3a4 4 0 0 0 5.2-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>
             </div>
-            <h3>Build Useful Skills</h3>
-            <p>Vocational, technical, digital, trade, and livelihood-oriented training.</p>
+            <h3 data-i18n="sup.c2h">Build Practical Skills</h3>
+            <p data-i18n="sup.c2p">Vocational, technical, digital, trade, and livelihood-focused learning can build confidence and greater independence.</p>
           </article>
           <article class="card reveal">
             <div class="icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 20c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6"/><path d="M14 14.6c.9-.4 1.9-.6 3-.6 2.5 0 4.5 2.2 4.5 5"/></svg>
             </div>
-            <h3>Strengthening Communities</h3>
-            <p>Partnerships with schools, training providers, educators, and community organizations.</p>
+            <h3 data-i18n="sup.c3h">Strengthening Local Opportunity</h3>
+            <p data-i18n="sup.c3p">Working with schools, educators, training providers, and community organizations where support can be genuinely useful.</p>
           </article>
         </div>
       </div>
@@ -314,14 +352,14 @@
     <section id="how-we-work">
       <div class="wrap how-grid">
         <div class="reveal">
-          <span class="eyebrow">Our Approach</span>
-          <h2>How we work</h2>
+          <span class="eyebrow" data-i18n="how.eyebrow">Our Approach</span>
+          <h2 data-i18n="how.h2">How we work</h2>
         </div>
         <ol class="principles reveal">
-          <li><div><strong>Support guided by need</strong><p>We focus assistance where it can make a meaningful difference.</p></div></li>
-          <li><div><strong>Respect for people and communities</strong><p>We listen to local knowledge and treat every learner and family with dignity.</p></div></li>
-          <li><div><strong>Open to all</strong><p>We welcome people of every background and do not discriminate.</p></div></li>
-          <li><div><strong>Opportunity that lasts</strong><p>We aim to build skills, confidence, and pathways that endure beyond a single grant.</p></div></li>
+          <li><div><strong data-i18n="how.1h">Close to Home</strong><p data-i18n="how.1p">We begin in the communities and regions most meaningful to our family, listening before deciding how to help.</p></div></li>
+          <li><div><strong data-i18n="how.2h">Thoughtful Support</strong><p data-i18n="how.2p">We focus on the small but important needs that can help a learner stay in school, continue training, or gain useful skills.</p></div></li>
+          <li><div><strong data-i18n="how.3h">Respectful Partnership</strong><p data-i18n="how.3p">We value local knowledge and work with care, dignity, and respect.</p></div></li>
+          <li><div><strong data-i18n="how.4h">Lasting Possibility</strong><p data-i18n="how.4p">We hope each opportunity creates greater confidence, independence, and a stronger path forward.</p></div></li>
         </ol>
       </div>
     </section>
@@ -329,16 +367,15 @@
     <section class="closing" id="contact">
       <div class="wrap closing-grid">
         <div class="panel panel-note reveal">
-          <span class="eyebrow">Donations &amp; Support</span>
-          <h2>Your good wishes matter most</h2>
-          <p>While the Anantpushpa Foundation has applied for registration under Sections 12A and 80G of the Indian tax code, we are not currently seeking donations. At this early stage, we value your advice, encouragement, and good wishes as we build the Foundation thoughtfully and responsibly.</p>
+          <span class="eyebrow" data-i18n="don.eyebrow">Donations &amp; Support</span>
+          <h2 data-i18n="don.h2">Your good wishes matter most</h2>
+          <p data-i18n="don.p">While the Anantpushpa Foundation has applied for registration under Sections 12A and 80G of the Indian tax code, we are not currently seeking donations. At this early stage, we value your advice, encouragement, and good wishes as we build the Foundation thoughtfully and responsibly.</p>
         </div>
         <div class="panel panel-contact reveal">
-          <span class="eyebrow">Contact</span>
-          <h2>Get in touch</h2>
-          <p>We would be glad to hear from you, whether you have advice to share, a partnership in mind, or simply want to learn more about our work.</p>
-          <!-- TODO: replace with the Foundation's email address -->
-          <a class="btn" href="mailto:FOUNDATION_EMAIL">Email the Foundation
+          <span class="eyebrow" data-i18n="con.eyebrow">Contact</span>
+          <h2 data-i18n="con.h2">Get in touch</h2>
+          <p data-i18n="con.p">We would be glad to hear from you, whether you have advice to share, a partnership in mind, or simply want to learn more about our work.</p>
+          <a class="btn" href="mailto:anantpushpafoundation@gmail.com"><span data-i18n="con.btn">Email the Foundation</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
         </div>
@@ -347,16 +384,84 @@
   </main>
 
   <footer>
-    <div class="wrap">
-      <span>© <span id="year">2026</span> Anantpushpa Foundation</span>
-      <span>Supporting learners and communities across India</span>
+    <div class="wrap logo-note reveal">
+      <img src="logo-light.svg" alt="Anant Pushpa Foundation logo" width="562" height="155" loading="lazy" />
+      <div>
+        <span class="eyebrow" data-i18n="logo.eyebrow">The Logo</span>
+        <p data-i18n="logo.p">The Anantpushpa Foundation logo honors the names and values of our parents, who are our inspiration. <em>Anant</em> reflects infinite possibility, while <em>Pushpa</em>, meaning flower, represents growth and the potential within every learner to flourish. Together, they express our hope that learning can create opportunity for generations to come.</p>
+      </div>
     </div>
     <figure class="footer-art">
       <img src="sunset.webp" alt="A grandfather and a young child sitting together on a curved wooden bench, watching the sun set over green hills" width="1448" height="1086" loading="lazy" />
     </figure>
+    <div class="wrap footer-meta">
+      <span>© <span id="year">2026</span> <span data-i18n="foot.name">Anantpushpa Foundation</span></span>
+      <span data-i18n="foot.tag">Supporting learners and communities across India</span>
+    </div>
   </footer>
 
   <script>
+    // Marathi copy, keyed by data-i18n. English stays in the HTML and is read back when switching.
+    const MR = {
+      "nav.insp": "प्रेरणा",
+      "nav.support": "आमचे सहाय्य",
+      "nav.how": "आमची कार्यपद्धती",
+      "nav.contact": "संपर्क",
+      "hero.h1": "शिक्षण आणि कौशल्ये <br class=\"br-desktop\" />संधीचा मार्ग <br class=\"br-desktop\" /><em>खुला करू शकतात.</em>",
+      "hero.lede": "अनंतपुष्प फाउंडेशन प्रत्यक्ष शैक्षणिक मदत, व्यावसायिक प्रशिक्षण आणि स्थानिक भागीदारीच्या माध्यमातून भारतभरातील विद्यार्थी, कुटुंबे आणि समुदायांना सहाय्य करते.",
+      "hero.btn1": "आमची प्रेरणा",
+      "hero.btn2": "आम्ही कशाला सहाय्य करतो",
+      "insp.eyebrow": "आमची प्रेरणा",
+      "insp.h2": "फाउंडेशनच्या स्थापनेमागील प्रेरणा",
+      "insp.p1": "अनंतपुष्प फाउंडेशन हा एक कौटुंबिक उपक्रम आहे. आमच्या आई-वडिलांनी आमच्यात रुजवलेल्या एका विश्वासातून तो उभा राहिला आहे: शिक्षणामुळे व्यक्ती आपली क्षमता साकार करू शकते.",
+      "insp.p2": "आमचे दिवंगत वडील आणि आमची आई यांचा शिक्षणाच्या सामर्थ्यावर गाढ विश्वास होता. शिक्षणामुळे व्यक्ती, कुटुंबे आणि समुदायांमध्ये आत्मविश्वास, स्वावलंबन, प्रतिष्ठा आणि अर्थपूर्ण संधी निर्माण होतात, असे ते मानत.",
+      "insp.p3": "आमच्या कुटुंबासाठी सर्वात जिव्हाळ्याच्या असलेल्या ठिकाणी प्रत्यक्ष उपयोगी पडेल अशी मदत करण्याची आमची इच्छा आहे. शाळेची फी, पुस्तके, प्रवास, तंत्रज्ञान किंवा व्यावसायिक प्रशिक्षणासाठी मिळालेली मदत एखाद्या विद्यार्थ्याला शिक्षण सुरू ठेवण्यास आणि अधिक सुरक्षित भविष्य घडवण्यास मदत करू शकते.",
+      "insp.p4": "आमचे उद्दिष्ट साधे आहे: एका वेळी एक विद्यार्थी आणि एक कुटुंब, असा प्रामाणिक आणि दीर्घकाळ टिकणारा बदल घडवणे.",
+      "sup.eyebrow": "आम्ही कशाला सहाय्य करतो",
+      "sup.h2": "सहाय्याची तीन क्षेत्रे",
+      "sup.p": "विद्यार्थी, कुटुंबे आणि विश्वासू स्थानिक भागीदारांसोबत प्रत्यक्ष उपयोगी मार्गांनी काम करण्याची आमची इच्छा आहे.",
+      "sup.c1h": "शिक्षण सुरू ठेवण्यास मदत",
+      "sup.c1p": "शाळेची फी, पुस्तके, गणवेश, उपकरणे, प्रवास, शिकवणी आणि इतर दैनंदिन मदत, जी विद्यार्थ्यांना शिक्षण सुरू ठेवण्यास उपयोगी ठरू शकते.",
+      "sup.c2h": "व्यावहारिक कौशल्यांचा विकास",
+      "sup.c2p": "व्यावसायिक, तांत्रिक, डिजिटल, कारागिरी आणि उपजीविकेवर आधारित शिक्षणातून आत्मविश्वास आणि अधिक स्वावलंबन निर्माण होऊ शकते.",
+      "sup.c3h": "स्थानिक संधी बळकट करणे",
+      "sup.c3p": "जिथे मदत खरोखर उपयोगी ठरेल, तिथे शाळा, शिक्षक, प्रशिक्षण संस्था आणि सामाजिक संस्थांसोबत काम करणे.",
+      "how.eyebrow": "आमचा दृष्टिकोन",
+      "how.h2": "आमची कार्यपद्धती",
+      "how.1h": "घराजवळून सुरुवात",
+      "how.1p": "आमच्या कुटुंबासाठी सर्वात जिव्हाळ्याच्या असलेल्या समुदायांपासून आणि प्रदेशांपासून आम्ही सुरुवात करतो. कशी मदत करायची हे ठरवण्यापूर्वी आम्ही आधी ऐकून घेतो.",
+      "how.2h": "विचारपूर्वक सहाय्य",
+      "how.2p": "विद्यार्थ्याला शाळेत टिकून राहण्यासाठी, प्रशिक्षण सुरू ठेवण्यासाठी किंवा उपयुक्त कौशल्ये मिळवण्यासाठी आवश्यक असलेल्या लहान पण महत्त्वाच्या गरजांवर आम्ही लक्ष केंद्रित करतो.",
+      "how.3h": "आदरपूर्ण भागीदारी",
+      "how.3p": "आम्ही स्थानिक ज्ञानाला महत्त्व देतो आणि काळजी, प्रतिष्ठा व आदराने काम करतो.",
+      "how.4h": "दीर्घकालीन शक्यता",
+      "how.4p": "प्रत्येक संधीतून अधिक आत्मविश्वास, स्वावलंबन आणि पुढे जाण्याचा अधिक भक्कम मार्ग निर्माण व्हावा, अशी आमची आशा आहे.",
+      "don.eyebrow": "देणगी आणि सहाय्य",
+      "don.h2": "तुमच्या शुभेच्छा सर्वात मोलाच्या",
+      "don.p": "अनंतपुष्प फाउंडेशनने भारतीय आयकर कायद्याच्या कलम 12A आणि 80G अंतर्गत नोंदणीसाठी अर्ज केला असला, तरी सध्या आम्ही देणग्यांची मागणी करत नाही. या सुरुवातीच्या टप्प्यावर, फाउंडेशन विचारपूर्वक आणि जबाबदारीने उभे करताना तुमचा सल्ला, प्रोत्साहन आणि शुभेच्छा आमच्यासाठी मोलाच्या आहेत.",
+      "con.eyebrow": "संपर्क",
+      "con.h2": "आमच्याशी संपर्क साधा",
+      "con.p": "तुम्हाला काही सल्ला द्यायचा असेल, भागीदारीची कल्पना असेल किंवा आमच्या कामाबद्दल अधिक जाणून घ्यायचे असेल, तर तुमच्याकडून ऐकायला आम्हाला आनंद होईल.",
+      "con.btn": "फाउंडेशनला ईमेल करा",
+      "logo.eyebrow": "आमचा लोगो",
+      "logo.p": "अनंतपुष्प फाउंडेशनचा लोगो आमचे प्रेरणास्थान असलेल्या आई-वडिलांच्या नावांचा आणि मूल्यांचा सन्मान करतो. <em>अनंत</em> म्हणजे असीम शक्यता, तर <em>पुष्प</em> म्हणजे फूल, जे वाढीचे आणि प्रत्येक विद्यार्थ्यामध्ये बहरण्याच्या क्षमतेचे प्रतीक आहे. एकत्रितपणे, शिक्षणातून पुढच्या पिढ्यांसाठी संधी निर्माण व्हाव्यात ही आमची आशा ते व्यक्त करतात.",
+      "foot.name": "अनंतपुष्प फाउंडेशन",
+      "foot.tag": "भारतभरातील विद्यार्थी आणि समुदायांना सहाय्य",
+    };
+    const i18nEls = document.querySelectorAll("[data-i18n]");
+    const EN = new Map([...i18nEls].map((el) => [el, el.innerHTML]));
+    const langBtns = document.querySelectorAll(".lang button");
+    const setLang = (lang) => {
+      document.documentElement.lang = lang;
+      i18nEls.forEach((el) => { el.innerHTML = lang === "mr" ? MR[el.dataset.i18n] ?? EN.get(el) : EN.get(el); });
+      langBtns.forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+    };
+    langBtns.forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
+    let startLang = new URLSearchParams(location.search).get("lang");
+    if (!startLang) { try { startLang = localStorage.getItem("lang"); } catch (e) {} }
+    if (startLang === "mr") setLang("mr");
+
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const header = document.querySelector("header");
